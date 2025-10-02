@@ -25,4 +25,16 @@ if (ok) {
 } else {
   console.log('not ok');
 }
+//左がtruthyなら右側を返す
+//左がfalseyなら左側を返す
+ok = false && false;
+console.log(ok);
 
+//左がtruthyなら左側を返す
+//左がfalseyなら右側を返す
+ok = true || false;
+console.log(ok);
+
+const userInputNothing = '';
+const userName = userInput || 'User';
+console.log(userName)
