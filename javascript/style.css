@@ -1,4 +1,6 @@
-.f-container{
-  display:flex; 
-  background-color: gray;
+.container {
+  display: flex;
+}
+.item {
+  flex: 1;
 }
