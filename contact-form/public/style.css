@@ -1,0 +1,166 @@
+/* ------------- Base ------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #f6f7fb;
+  --card: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --primary: #2563eb;
+  --primary-weak: rgba(37, 99, 235, 0.12);
+  --ring: rgba(37, 99, 235, 0.35);
+  --border: #e5e7eb;
+  --shadow: 0 10px 25px rgba(0,0,0,0.07), 0 2px 8px rgba(0,0,0,0.05);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1020;
+    --card: #0f172a;
+    --text: #e5e7eb;
+    --muted: #94a3b8;
+    --primary: #60a5fa;
+    --primary-weak: rgba(96,165,250,0.15);
+    --ring: rgba(96,165,250,0.45);
+    --border: #1f2937;
+    --shadow: 0 10px 25px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.25);
+  }
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  color: var(--text);
+  background: radial-gradient(1200px 600px at 10% -10%, #e9efff, transparent 60%),
+              radial-gradient(900px 500px at 110% 10%, #f3f7ff, transparent 50%),
+              var(--bg);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+/* ------------- Card / Form ------------- */
+#contact-form {
+  width: min(560px, 92vw);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 24px;
+  display: grid;
+  gap: 14px;
+}
+
+#contact-form::before {
+  /* 上部の淡いアクセントバー */
+  content: "";
+  display: block;
+  height: 6px;
+  width: 100%;
+  border-radius: 10px 10px 0 0;
+  margin: -24px -24px 18px;
+  background: linear-gradient(90deg, var(--primary), transparent 70%);
+  opacity: 0.25;
+}
+
+/* ------------- Inputs ------------- */
+#contact-form input[type="email"],
+#contact-form input[type="password"],
+#contact-form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text);
+  outline: none;
+  transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
+}
+
+#contact-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+#contact-form input::placeholder,
+#contact-form textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.85;
+}
+
+#contact-form input:focus,
+#contact-form textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-weak), 0 1px 1px rgba(0,0,0,0.02);
+}
+
+/* ------------- Button ------------- */
+#contact-form button[type="submit"] {
+  appearance: none;
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-weight: 600;
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  transition: transform 120ms ease, filter 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 6px 14px rgba(37,99,235,0.25), 0 2px 6px rgba(0,0,0,0.06);
+}
+
+#contact-form button[type="submit"]:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+#contact-form button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+#contact-form button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ------------- Result ------------- */
+#result {
+  margin: 14px auto 0;
+  width: min(560px, 92vw);
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+/* ------------- Small screens ------------- */
+@media (max-width: 420px) {
+  #contact-form {
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  #contact-form::before {
+    margin: -18px -18px 14px;
+  }
+}
+
+/* ------------- Accessibility niceties ------------- */
+:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
