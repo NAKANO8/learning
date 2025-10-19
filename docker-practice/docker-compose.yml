@@ -1,0 +1,57 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"   # ローカルからツールで触りたい時用
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 3s
+      retries: 10
+
+  api:
+    build:
+      context: ./api
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      NODE_ENV: ${NODE_ENV}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3000:3000"   # 直接叩きたい人用
+    volumes:
+      - ./api:/app    # ホットリロード開発
+      - /app/node_modules
+    command: sh -c "npm run dev"  # ts-node-dev を想定
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: sh -c "npm run dev -- --host" # Vite dev server
+    depends_on:
+      - api
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "8080:80"     # ブラウザは http://localhost:8080 へ
+    depends_on:
+      - frontend
+      - api
+
+volumes:
+  db_data:
+
