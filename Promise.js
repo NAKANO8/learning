@@ -20,3 +20,4 @@ new Promise((resolve) => {
       }, 1000);
     });
   });
+console.log(0);

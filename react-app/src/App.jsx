@@ -1,24 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Button from './Button'
+import "./styles.css";
 
-function App() {
+const onClickAdd = () => {
+  //テキストボックスの値を取得し、初期化する
+  const inputText = document.getElementById("add-text").value;
+  document.getElementById("add-text").value = "";
 
-  const handleClick = () => {
-    console.log('Button clicked!');
-  };
+  //li生成
+  const li = document.createElement("li");
 
-  return (
-    <>
-      <h1>Hello World</h1>
-      <Button type="button" disabled={false} onClick={handleClick}>
-        <span>Click Me</span>
-      </Button>
+  //div作成
+  const div = document.createElement("div");
+  div.className = "list-row";
 
-    </>
-  )
-}
+  //pタグ生成
+  const p = document.createElement("p");
+  p.className = "todo-item";
+  p.innerHTML = inputText;
 
-export default App
+  //button完了タグ生成
+  const completeButton = document.createElement("button");
+  completeButton.innerText = "完了";
+  completeButton.addEventListener("click", () => {
+    alert("完了");
+  });
+
+  //deleteButton作成
+  const deleteButton = document.createElement("button");
+  deleteButton.innerText = "削除";
+  deleteButton.addEventListener("click", () => {
+    alert("削除");
+  });
+
+  div.appendChild(p);
+  div.appendChild(completeButton);
+  div.appendChild(deleteButton);
+  li.appendChild(div);
+
+  //未完了リストに追加
+  document.getElementById("incomplete-list").appendChild(li);
+};
+
+document.getElementById("add-button").addEventListener("click", onClickAdd);
+

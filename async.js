@@ -3,6 +3,7 @@ func = async () => {
   await log(2);
   await log(1);
 };
+console.log(4);
 
 log = (num) => {
   return new Promise((resolve) => {
